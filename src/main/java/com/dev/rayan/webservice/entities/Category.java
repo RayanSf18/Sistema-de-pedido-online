@@ -1,5 +1,6 @@
 package com.dev.rayan.webservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,8 +25,9 @@ public class Category implements Serializable {
     @EqualsAndHashCode.Include
     private String name;
 
-    @Transient
     @Setter(value = AccessLevel.NONE)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     public Category(Long id, String name) {
