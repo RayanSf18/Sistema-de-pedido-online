@@ -13,8 +13,8 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Entity
-@Table(name = "tb_category")
-public class Category implements Serializable {
+@Table(name = "tb_product")
+public class Product implements Serializable {
 
     @EqualsAndHashCode.Include
     @Id
@@ -24,12 +24,20 @@ public class Category implements Serializable {
     @EqualsAndHashCode.Include
     private String name;
 
+    private String description;
+    private Double price;
+    private String imgUrl;
+
     @Transient
     @Setter(value = AccessLevel.NONE)
-    private Set<Product> products = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
-    public Category(Long id, String name) {
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
     }
+
 }

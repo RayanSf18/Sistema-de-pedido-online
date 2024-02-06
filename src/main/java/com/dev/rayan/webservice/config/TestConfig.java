@@ -2,10 +2,12 @@ package com.dev.rayan.webservice.config;
 
 import com.dev.rayan.webservice.entities.Category;
 import com.dev.rayan.webservice.entities.Order;
+import com.dev.rayan.webservice.entities.Product;
 import com.dev.rayan.webservice.entities.User;
 import com.dev.rayan.webservice.entities.enums.OrderStatus;
 import com.dev.rayan.webservice.repositories.CategoryRepository;
 import com.dev.rayan.webservice.repositories.OrderRepository;
+import com.dev.rayan.webservice.repositories.ProductRepository;
 import com.dev.rayan.webservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +30,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -47,5 +52,14 @@ public class TestConfig implements CommandLineRunner {
         Category cat3 = new Category(null, "Computers");
 
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+
+        Product p1 = new Product(null, "Smartphone X", "High-performance smartphone with advanced features.", 799.99, "https://example.com/smartphoneX.jpg");
+        Product p2 = new Product(null, "The Great Gatsby", "Classic novel depicting the Jazz Age in America.", 12.99, "https://example.com/greatGatsby.jpg");
+        Product p3 = new Product(null, "Gaming Laptop Y", "Powerful gaming laptop for immersive gaming experiences.", 1499.99, "https://example.com/gamingLaptopY.jpg");
+        Product p4 = new Product(null, "Wireless Earbuds Z", "High-quality wireless earbuds for seamless audio experience.", 129.99, "https://example.com/wirelessEarbudsZ.jpg");
+        Product p5 = new Product(null, "Educational Book A", "Comprehensive guide for learning new skills and knowledge.", 29.99, "https://example.com/educationalBookA.jpg");
+
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
     }
 }

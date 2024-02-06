@@ -23,8 +23,13 @@ public class User implements Serializable {
     private Long id;
 
     private String name;
+
+    @EqualsAndHashCode.Include
     private String email;
+
+    @EqualsAndHashCode.Include
     private String phone;
+
     private String password;
 
     @JsonIgnore
