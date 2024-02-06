@@ -6,7 +6,9 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -31,6 +33,10 @@ public class User implements Serializable {
     private String phone;
 
     private String password;
+
+    @Setter(value = AccessLevel.NONE)
+    @OneToMany(mappedBy = "user")
+    private Set<Address> addresses = new HashSet<>();
 
     @JsonIgnore
     @Setter(value = AccessLevel.NONE)
