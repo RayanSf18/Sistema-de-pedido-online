@@ -59,7 +59,7 @@ public class UserService {
         }
     }
 
-    // Updating existing user details with new user details.
+    // Updating existing user details with new user details
     private void updateData(User existingUser, User newUserDetails) {
         existingUser.setName(newUserDetails.getName());
         existingUser.setEmail(newUserDetails.getEmail());
