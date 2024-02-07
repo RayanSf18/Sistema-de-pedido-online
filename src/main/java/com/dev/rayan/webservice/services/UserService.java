@@ -2,6 +2,7 @@ package com.dev.rayan.webservice.services;
 
 import com.dev.rayan.webservice.entities.User;
 import com.dev.rayan.webservice.repositories.UserRepository;
+import com.dev.rayan.webservice.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class UserService {
 
     public User readById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.get();
+        return optionalUser.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User update(Long id, User newUserDetails) {
