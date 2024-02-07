@@ -2,8 +2,11 @@ package com.dev.rayan.webservice.services;
 
 import com.dev.rayan.webservice.entities.User;
 import com.dev.rayan.webservice.repositories.UserRepository;
+import com.dev.rayan.webservice.services.exceptions.DatabaseException;
 import com.dev.rayan.webservice.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +40,16 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException(id);
+        }
+
+        try {
+            userRepository.deleteById(id);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
 
