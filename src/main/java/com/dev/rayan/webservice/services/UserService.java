@@ -14,20 +14,36 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> findAll() {
+    public User create(User user) {
+        return userRepository.save(user);
+    }
+
+    public List<User> readAll() {
         return userRepository.findAll();
     }
 
-    public User findById(Long id) {
+    public User readById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.get();
     }
 
-    public User insert(User user) {
-        return userRepository.save(user);
+    public User update(Long id, User newUserDetails) {
+        User existingUser = userRepository.getReferenceById(id);
+
+        updateData(existingUser, newUserDetails);
+
+        return userRepository.save(existingUser);
     }
 
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+
+    // Updating existing user details with new user details.
+    private void updateData(User existingUser, User newUserDetails) {
+        existingUser.setName(newUserDetails.getName());
+        existingUser.setEmail(newUserDetails.getEmail());
+        existingUser.setPhone(newUserDetails.getPhone());
     }
 }

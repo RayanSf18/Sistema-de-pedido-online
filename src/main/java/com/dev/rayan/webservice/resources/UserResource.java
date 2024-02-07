@@ -17,21 +17,9 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> userList = userService.findAll();
-        return ResponseEntity.ok().body(userList);
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User user = userService.findById(id);
-        return ResponseEntity.ok().body(user);
-    }
-
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User user) {
-        User createdUser = userService.insert(user);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User createdUser = userService.create(user);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -40,10 +28,29 @@ public class UserResource {
         return ResponseEntity.created(uri).body(createdUser);
     }
 
+    @GetMapping
+    public ResponseEntity<List<User>> readAll() {
+        List<User> userList = userService.readAll();
+        return ResponseEntity.ok().body(userList);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> readById(@PathVariable Long id) {
+        User user = userService.readById(id);
+        return ResponseEntity.ok().body(user);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
+        User updatedUser = userService.update(id,user);
+        return ResponseEntity.ok().body(updatedUser);
+    }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 
 }
