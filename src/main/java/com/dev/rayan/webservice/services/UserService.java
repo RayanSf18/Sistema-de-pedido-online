@@ -4,6 +4,7 @@ import com.dev.rayan.webservice.entities.User;
 import com.dev.rayan.webservice.repositories.UserRepository;
 import com.dev.rayan.webservice.services.exceptions.DatabaseException;
 import com.dev.rayan.webservice.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -32,11 +33,17 @@ public class UserService {
     }
 
     public User update(Long id, User newUserDetails) {
-        User existingUser = userRepository.getReferenceById(id);
+        try {
+            User existingUser = userRepository.getReferenceById(id);
 
-        updateData(existingUser, newUserDetails);
+            updateData(existingUser, newUserDetails);
 
-        return userRepository.save(existingUser);
+            return userRepository.save(existingUser);
+
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
+
     }
 
     public void delete(Long id) {
@@ -51,7 +58,6 @@ public class UserService {
             throw new DatabaseException(e.getMessage());
         }
     }
-
 
     // Updating existing user details with new user details.
     private void updateData(User existingUser, User newUserDetails) {
